@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+:root {
+  --color-bg: #e9f3ff; /* light blue */
+  --color-text: #0b2149; /* blackish blue */
+  --color-border: #d1d5db; /* gray border */
+  --color-heading: #081a38; /* darker than subheading */
+  --color-subheading: #203a6d; /* slightly lighter */
+}
+
+.dark {
+  --color-bg: #0f1115; /* near black */
+  --color-text: #90ee90; /* contrast green */
+  --color-border: #4c7a4c; /* darker green border */
+  --color-heading: #b0f0b0; /* lighter than subheading */
+  --color-subheading: #86d686; /* slightly darker */
+}
+
+/* Base styles using the variables */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+}
