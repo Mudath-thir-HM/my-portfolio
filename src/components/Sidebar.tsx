@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   FaCertificate,
+  FaDesktop,
   FaFileAlt,
   FaGithub,
   FaHome,
@@ -36,6 +37,7 @@ const Sidebar = () => {
       icon: <FaCertificate />,
     },
     { path: "/resume", label: "Resume", icon: <FaFileAlt /> },
+    { path: "/projects", label: "Projects", icon: <FaDesktop /> },
   ];
   return (
     <aside className="w-2/7 md:w-2/8 h-screen overflow-y-auto bg-[color:var(--color-bg)] border-r border-[color:var(--color-border)] fixed left-0 top-0 p-6 flex flex-col justify-between">
