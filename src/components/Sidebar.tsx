@@ -92,7 +92,7 @@ const Sidebar = () => {
           <a href="https://github.com/Mudath-thir-HM" target="_blank">
             <FaGithub />
           </a>
-          <a href="https://wa.me/2349021727645" target="_blank">
+          <a href="https://wa.me/2348100976947" target="_blank">
             <FaWhatsapp />
           </a>
           <a href="mailto:eighthmudathir@gmail.com">
