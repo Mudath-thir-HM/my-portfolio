@@ -5,7 +5,7 @@ const Layout = () => {
   return (
     <div className="flex flex-row relative">
       <Sidebar />
-      <main className="ml-[30%] w-full p-10 min-h-screen bg-[color:var(--color-bg)] overflow-y-auto relative">
+      <main className="ml-[30%] w-full p-3 md:p-10 min-h-screen bg-[color:var(--color-bg)] overflow-y-auto relative">
         {/* Animated background lines */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
           <style>{`
