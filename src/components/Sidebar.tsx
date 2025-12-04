@@ -42,10 +42,11 @@ const Sidebar = () => {
   return (
     <aside
       className="w-2/7 md:w-2/8 h-screen overflow-y-auto bg-[color:var(--color-bg)] border-r 
-    border-[color:var(--color-border)] fixed left-0 top-0 p-1 md:p-6 text-center md:text-left pt-4 md:pt-0 flex flex-col justify-between"
+    border-[color:var(--color-border)] fixed left-0 top-0 p-1 md:p-6 text-center md:text-left
+     pt-4 md:pt-0 flex flex-col justify-between"
     >
       <div>
-        <div className="flex flex-col items-center mb-6 lg:flex-row gap-5">
+        <div className="flex flex-col items-center mb-6 lg:flex-row gap-5 pt-4">
           <img
             src={profilePic}
             alt="profile"
