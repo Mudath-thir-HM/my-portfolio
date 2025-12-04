@@ -16,6 +16,27 @@ export default function Home() {
     { imageSrc: image3, id: "img3" },
     { imageSrc: image4, id: "img4" },
   ];
+
+  const webDetails = [
+    {
+      imageUrl: webImage1,
+      url: "https://bira-im.vercel.app",
+      description: "Bira'eem",
+      id: "no1",
+    },
+    {
+      imageUrl: webImage2,
+      url: "https://smarrtevent.netlify.app",
+      description: "SmarrtEvent",
+      id: "no2",
+    },
+    {
+      imageUrl: webImage3,
+      url: "https://devfoliofrontend.netlify.app",
+      description: "Devfolio",
+      id: "no3",
+    },
+  ];
   return (
     <>
       <section>
@@ -101,42 +122,23 @@ export default function Home() {
           </li>
         </ul>
         <div className="flex flex-row gap-4 flex-wrap">
-          <div className="flex flex-col justify-center gap-2 items-center p-4 rounded-md">
-            <a
-              href="https://smarrtevent.netlify.app"
-              target="_blank"
-              className="border-b-2 border-b-[color:var(--color-subheading)] py-2"
+          {webDetails.map((webDetail) => (
+            <div
+              className="flex flex-col justify-center gap-2 items-center p-4 rounded-md"
+              key={webDetail.id}
             >
-              <img src={webImage2} alt="" className="rounded-md" />
-            </a>
-            <h3 className="text-[color:var(--color-subheading)] text-lg">
-              <b>SmarrtEvent</b>
-            </h3>
-          </div>
-          <div className="flex flex-col justify-center gap-2 items-center p-4 rounded-md">
-            <a
-              href="https://bira-im.vercel.app"
-              target="_blank"
-              className="border-b-2 border-b-[color:var(--color-subheading)] py-2"
-            >
-              <img src={webImage1} alt="" className="rounded-md" />
-            </a>
-            <h3 className="text-[color:var(--color-subheading)] text-lg">
-              <b>Bira'eem</b>
-            </h3>
-          </div>
-          <div className="flex flex-col justify-center gap-2 items-center p-4 rounded-md">
-            <a
-              href="https://devfoliofrontend.netlify.app"
-              target="_blank"
-              className="border-b-2 border-b-[color:var(--color-subheading)] py-2"
-            >
-              <img src={webImage3} alt="" className="rounded-md" />
-            </a>
-            <h3 className="text-[color:var(--color-subheading)] text-lg">
-              <b>DevFolio</b>
-            </h3>
-          </div>
+              <a
+                href={webDetail.url}
+                target="_blank"
+                className="border-b-2 border-b-[color:var(--color-subheading)] py-2"
+              >
+                <img src={webDetail.imageUrl} alt="" className="rounded-md" />
+              </a>
+              <h3 className="text-[color:var(--color-subheading)] text-lg">
+                <b>{webDetail.description}</b>
+              </h3>
+            </div>
+          ))}
         </div>
       </section>
 
