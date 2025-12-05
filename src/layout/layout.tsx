@@ -4,15 +4,7 @@ import { useState } from "react";
 
 const Layout = () => {
   const [isToggled, setIsToggled] = useState(false);
-  const COLLAPSED_WIDTH = "w-16";
-  const EXPANDED_WIDTH_DESKTOP = "w-64";
-  const getMarginInClass = () => {
-    if (isToggled) {
-      return "md:ml-16";
-    } else {
-      return "md:ml-[25%] lg:ml-[20%]";
-    }
-  };
+
   const baseMargin = isToggled ? "ml-16" : "md:ml-[300px]";
   return (
     <div className="flex flex-row relative">
