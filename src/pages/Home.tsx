@@ -44,11 +44,11 @@ export default function Home() {
           👋 I'm Mudath-thir Hassan
         </h1>
         <p className="text-[color:var(--color-text)] max-w-2xl">
-          A Full-Stack developer with 2+ years of experience from Gombe,
-          Nigeria. Focused on react and Next.js with Node.js(express) and
-          postgress. I love building scalable and organised projects, and have a
-          strong passion in building applications, while also being a very
-          friendly and easygoing individual.
+          A Full-Stack developer with 2+ years of experience. Focused on react
+          and Next.js with Node.js(express) and postgress. I love building
+          scalable and organised projects, and have a strong passion in building
+          applications, while also being a very friendly and easygoing
+          individual.
         </p>
       </section>
 

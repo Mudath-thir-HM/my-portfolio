@@ -1,11 +1,25 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
+import { useState } from "react";
 
 const Layout = () => {
+  const [isToggled, setIsToggled] = useState(false);
+  const COLLAPSED_WIDTH = "w-16";
+  const EXPANDED_WIDTH_DESKTOP = "w-64";
+  const getMarginInClass = () => {
+    if (isToggled) {
+      return "md:ml-16";
+    } else {
+      return "md:ml-[25%] lg:ml-[20%]";
+    }
+  };
+  const baseMargin = isToggled ? "ml-16" : "md:ml-[300px]";
   return (
     <div className="flex flex-row relative">
-      <Sidebar />
-      <main className="ml-[30%] w-full p-3 md:p-10 min-h-screen bg-[color:var(--color-bg)] overflow-y-auto relative">
+      <Sidebar isToggled={isToggled} setIsToggled={setIsToggled} />
+      <section
+        className={`${baseMargin} w-full p-3 md:p-10 min-h-screen bg-[color:var(--color-bg)] overflow-y-auto relative transition-all duration-300 ease-in-out`}
+      >
         {/* Animated background lines */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
           <style>{`
@@ -127,7 +141,7 @@ const Layout = () => {
         <div className="relative z-10">
           <Outlet />
         </div>
-      </main>
+      </section>
     </div>
   );
 };

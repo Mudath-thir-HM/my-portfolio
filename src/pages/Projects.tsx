@@ -8,18 +8,24 @@ const Projects = () => {
       imageUrl: webImage1,
       url: "https://bira-im.vercel.app",
       description: "Bira'eem",
+      extraInfo:
+        "An Adaptive E-Learning Platform for Secondary Schools featuring personalized learning paths, gamification, and a dynamic dashboard for student progress.",
       id: "no1",
     },
     {
       imageUrl: webImage2,
       url: "https://smarrtevent.netlify.app",
       description: "SmarrtEvent",
+      extraInfo:
+        "An Event Planning Platform a modern app that streamlines event creation, registration, and user engagement.",
       id: "no2",
     },
     {
       imageUrl: webImage3,
       url: "https://devfoliofrontend.netlify.app",
       description: "Devfolio",
+      extraInfo:
+        "A Portfolio & Project Showcase Builder</b> a simple tool that helps creators build personal pages and share their work for feedback.",
       id: "no3",
     },
   ];
@@ -45,6 +51,7 @@ const Projects = () => {
             <h3 className="text-[color:var(--color-subheading)] text-lg">
               <b>{webDetail.description}</b>
             </h3>
+            <p className="text-center">{webDetail.extraInfo}</p>
           </div>
         ))}
       </div>
