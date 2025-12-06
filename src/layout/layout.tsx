@@ -1,22 +1,60 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const Layout = () => {
   const [isToggled, setIsToggled] = useState(false);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Handle swipe gestures
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const swipeDistance = touchEndX.current - touchStartX.current;
+    const minSwipeDistance = 50; // Minimum distance for a swipe to register
+
+    // Swipe right from left edge (open sidebar)
+    if (touchStartX.current < 50 && swipeDistance > minSwipeDistance) {
+      setIsToggled(true);
+    }
+
+    // Swipe left (close sidebar)
+    if (isToggled && swipeDistance < -minSwipeDistance) {
+      setIsToggled(false);
+    }
+
+    // Reset values
+    touchStartX.current = 0;
+    touchEndX.current = 0;
+  };
 
   const EXPANDED_MARGIN = "md:ml-[300px] lg:ml-[28%]";
   const COLLAPSED_MARGIN = "md:ml-16";
-  const baseMargin = isToggled ? "ml-16" : "md:ml-[300px]";
 
   const getMarginClass = () => {
     if (isToggled) {
-      // Mobile: No margin needed, content is full width
-      // Desktop: Collapsed margin
       return `${COLLAPSED_MARGIN}`;
     } else {
-      // Mobile: No margin needed
-      // Desktop: Expanded margin
       return `${EXPANDED_MARGIN}`;
     }
   };
@@ -24,16 +62,22 @@ const Layout = () => {
   return (
     <div className="flex flex-row relative">
       <Sidebar isToggled={isToggled} setIsToggled={setIsToggled} />
+
+      {/* Overlay for mobile when sidebar is open */}
+      {isToggled && isMobile && (
+        <div
+          onClick={() => setIsToggled(false)}
+          className="fixed inset-0 bg-black opacity-50 z-40 md:hidden"
+        />
+      )}
+
       <section
-        className={`${baseMargin} w-full p-3 md:p-10 min-h-screen bg-[color:var(--color-bg)] 
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        className={`w-full p-3 md:p-10 min-h-screen bg-[color:var(--color-bg)] 
         overflow-y-auto relative transition-all duration-300 ease-in-out ${getMarginClass}`}
       >
-        {isToggled && (
-          <div
-            onClick={() => setIsToggled(false)}
-            className="fixed inset-0 bg-black opacity-50 z-40 md:hidden"
-          />
-        )}
         {/* Animated background lines */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
           <style>{`

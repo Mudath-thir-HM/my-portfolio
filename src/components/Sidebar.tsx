@@ -22,16 +22,22 @@ const Sidebar = ({
   isToggled: boolean;
   setIsToggled: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const mobileClasses = isToggled
-    ? "translate-x-0" // Visible
-    : "-translate-x-full";
-
-  const desktopWidth = isToggled ? "md:w-16" : "md:w-[300px] lg:w-2/7";
-  const desktopTransition = "md:translate-x-0";
-
   const [isDark, setIsDark] = useState(
     () => localStorage.getItem("theme") === "dark"
   );
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const handleToggled = () => {
     setIsToggled((prev) => !prev);
@@ -59,56 +65,57 @@ const Sidebar = ({
     { path: "/projects", label: "Projects", icon: <FaDesktop /> },
   ];
 
-  // Define classes for when the sidebar is toggled (collapsed)
-  const toggledWidth = "w-16"; // A fixed width for the collapsed state
+  // Mobile: Show/hide with translate
+  // Desktop: Expand/collapse with width change
+  const mobileClasses = isMobile
+    ? isToggled
+      ? "translate-x-0" // Visible on mobile
+      : "-translate-x-full" // Hidden on mobile
+    : "translate-x-0"; // Always visible on desktop
 
-  // Define classes for when the sidebar is NOT toggled (expanded)
-  const expandedWidth = "w-2/7 md:w-2/8"; // Original width for the expanded state
+  const desktopWidth =
+    !isMobile && isToggled ? "md:w-16" : "md:w-[300px] lg:w-2/7";
+  const toggledWidth = isToggled && !isMobile ? "w-16" : "w-[280px]";
 
   return (
     <aside
-      // 1. Dynamic width based on isToggled
-      className={`${
-        isToggled ? toggledWidth : expandedWidth
-      } h-screen overflow-y-auto bg-[color:var(--color-bg)] border-r 
+      className={`${toggledWidth} h-screen overflow-y-auto bg-[color:var(--color-bg)] border-r 
       border-[color:var(--color-border)] fixed left-0 top-0 p-1 text-center 
-      pt-4 flex flex-col justify-between transition-all duration-300 ease-in-out 
-      ${mobileClasses} ${desktopTransition} ${desktopWidth}`}
+      pt-4 flex flex-col justify-between transition-all duration-300 ease-in-out z-50
+      ${mobileClasses} ${desktopWidth}`}
     >
       <div className="w-full">
         <div
           className={`flex flex-row ${
-            isToggled ? "justify-center" : "justify-start"
+            isToggled && !isMobile ? "justify-center" : "justify-start"
           } items-center`}
         >
           <button
             onClick={handleToggled}
-            // 2. Center the toggle button when collapsed
             className={`cursor-pointer mt-5 ${
-              isToggled ? "mx-auto" : "ml-0 mr-0"
+              isToggled && !isMobile ? "mx-auto" : "ml-0 mr-0"
             }`}
           >
-            {isToggled ? (
+            {isToggled && !isMobile ? (
               <GoSidebarCollapse className="w-5 h-5" />
             ) : (
               <GoSidebarExpand className="w-5 h-5" />
             )}
           </button>
         </div>
+
         <div
-          // 3. Adjust alignment and padding for profile section
           className={`flex flex-col mb-6 gap-5 pt-4 ${
-            isToggled ? "items-center" : "items-center lg:flex-row"
+            isToggled && !isMobile ? "items-center" : "items-center lg:flex-row"
           }`}
         >
           <img
             src={profilePic}
             alt="profile"
-            className="rounded-full w-10 h-10 md:w-10 md:h-10 mb-3" // Kept smaller for consistent sizing
+            className="rounded-full w-10 h-10 md:w-10 md:h-10 mb-3"
           />
 
-          {/* 4. Hide name and title when toggled */}
-          {!isToggled && (
+          {!(isToggled && !isMobile) && (
             <div className="flex flex-col text-left">
               <h2 className="font-semibold text-sm md:text-lg text-[color:var(--color-heading)]">
                 Mudath-thir Hassan
@@ -125,10 +132,10 @@ const Sidebar = ({
             <NavLink
               key={item.path}
               to={item.path}
+              onClick={() => isMobile && setIsToggled(false)} // Close sidebar on mobile after clicking
               className={({ isActive }) =>
-                // 5. Center content when toggled, align left otherwise
                 `flex items-center gap-2 p-2 rounded-md transition sm:items-center mb-1 
-                ${isToggled ? "justify-center" : "justify-start"} 
+                ${isToggled && !isMobile ? "justify-center" : "justify-start"} 
                 ${
                   isActive
                     ? "bg-[color:var(--color-border)] text-[color:var(--color-heading)] font-medium shadow-sm"
@@ -137,9 +144,8 @@ const Sidebar = ({
               }
             >
               {item.icon}
-              {/* 6. Hide label when toggled */}
-              {!isToggled && (
-                <span className="hidden md:inline">{item.label}</span>
+              {!(isToggled && !isMobile) && (
+                <span className="md:inline">{item.label}</span>
               )}
             </NavLink>
           ))}
@@ -147,22 +153,19 @@ const Sidebar = ({
       </div>
 
       <div
-        // 7. Center content when toggled, align left otherwise
         className={`flex flex-col ${
-          isToggled ? "items-center" : "items-start"
+          isToggled && !isMobile ? "items-center" : "items-start"
         } pt-4 pb-4 px-2`}
       >
-        {/* 8. Hide "Socials" heading when toggled */}
-        {!isToggled && (
+        {!(isToggled && !isMobile) && (
           <h3 className="font-semibold text-sm mb-2 text-[color:var(--color-subheading)]">
             Socials
           </h3>
         )}
 
-        {/* 9. Adjust layout for social icons */}
         <div
           className={`flex ${
-            isToggled ? "flex-col" : "flex-row"
+            isToggled && !isMobile ? "flex-col" : "flex-row"
           } items-center gap-3 text-[color:var(--color-text)]`}
         >
           <a
@@ -191,7 +194,6 @@ const Sidebar = ({
           </a>
         </div>
 
-        {/* 10. Center dark mode button */}
         <button
           onClick={() => setIsDark(!isDark)}
           className="rounded-full w-10 p-3 mt-4 text-sm text-[color:var(--color-text)] border border-[color:var(--color-border)] hover:opacity-80 transition-all cursor-pointer"
