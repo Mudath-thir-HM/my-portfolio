@@ -22,6 +22,13 @@ const Sidebar = ({
   isToggled: boolean;
   setIsToggled: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const mobileClasses = isToggled
+    ? "translate-x-0" // Visible
+    : "-translate-x-full";
+
+  const desktopWidth = isToggled ? "md:w-16" : "md:w-[300px] lg:w-2/7";
+  const desktopTransition = "md:translate-x-0";
+
   const [isDark, setIsDark] = useState(
     () => localStorage.getItem("theme") === "dark"
   );
@@ -65,7 +72,8 @@ const Sidebar = ({
         isToggled ? toggledWidth : expandedWidth
       } h-screen overflow-y-auto bg-[color:var(--color-bg)] border-r 
       border-[color:var(--color-border)] fixed left-0 top-0 p-1 text-center 
-      pt-4 flex flex-col justify-between transition-all duration-300 ease-in-out`}
+      pt-4 flex flex-col justify-between transition-all duration-300 ease-in-out 
+      ${mobileClasses} ${desktopTransition} ${desktopWidth}`}
     >
       <div className="w-full">
         <div

@@ -5,13 +5,35 @@ import { useState } from "react";
 const Layout = () => {
   const [isToggled, setIsToggled] = useState(false);
 
+  const EXPANDED_MARGIN = "md:ml-[300px] lg:ml-[28%]";
+  const COLLAPSED_MARGIN = "md:ml-16";
   const baseMargin = isToggled ? "ml-16" : "md:ml-[300px]";
+
+  const getMarginClass = () => {
+    if (isToggled) {
+      // Mobile: No margin needed, content is full width
+      // Desktop: Collapsed margin
+      return `${COLLAPSED_MARGIN}`;
+    } else {
+      // Mobile: No margin needed
+      // Desktop: Expanded margin
+      return `${EXPANDED_MARGIN}`;
+    }
+  };
+
   return (
     <div className="flex flex-row relative">
       <Sidebar isToggled={isToggled} setIsToggled={setIsToggled} />
       <section
-        className={`${baseMargin} w-full p-3 md:p-10 min-h-screen bg-[color:var(--color-bg)] overflow-y-auto relative transition-all duration-300 ease-in-out`}
+        className={`${baseMargin} w-full p-3 md:p-10 min-h-screen bg-[color:var(--color-bg)] 
+        overflow-y-auto relative transition-all duration-300 ease-in-out ${getMarginClass}`}
       >
+        {isToggled && (
+          <div
+            onClick={() => setIsToggled(false)}
+            className="fixed inset-0 bg-black opacity-50 z-40 md:hidden"
+          />
+        )}
         {/* Animated background lines */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
           <style>{`
