@@ -38,7 +38,7 @@ const Layout = () => {
       {isMobile && !isToggled && (
         <button
           onClick={() => setIsToggled(true)}
-          className="fixed top-4 left-4 z-50 p-3 rounded-full bg-[color:var(--color-background)]/50 
+          className="fixed top-4 left-4 z-50 p-3 rounded-full bg-[color:var(--color-subheading)] 
                      text-[color:var(--color-heading)] shadow-lg hover:opacity-90 
                      transition-all duration-200 md:hidden border 
                      border-[color:var(--color-heading)]"
@@ -177,7 +177,7 @@ const Layout = () => {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 pl-3">
+        <div className="relative z-10 pl-3 md:pl-10">
           <Outlet />
         </div>
       </section>
