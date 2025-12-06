@@ -1,11 +1,10 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { GoSidebarCollapse } from "react-icons/go";
 
 const Layout = () => {
   const [isToggled, setIsToggled] = useState(false);
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
   const [isMobile, setIsMobile] = useState(false);
 
   // Detect if device is mobile
@@ -19,34 +18,6 @@ const Layout = () => {
 
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
-  // Handle swipe gestures
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = () => {
-    const swipeDistance = touchEndX.current - touchStartX.current;
-    const minSwipeDistance = 50; // Minimum distance for a swipe to register
-
-    // Swipe right from left edge (open sidebar)
-    if (touchStartX.current < 50 && swipeDistance > minSwipeDistance) {
-      setIsToggled(true);
-    }
-
-    // Swipe left (close sidebar)
-    if (isToggled && swipeDistance < -minSwipeDistance) {
-      setIsToggled(false);
-    }
-
-    // Reset values
-    touchStartX.current = 0;
-    touchEndX.current = 0;
-  };
 
   const EXPANDED_MARGIN = "md:ml-[300px] lg:ml-[28%]";
   const COLLAPSED_MARGIN = "md:ml-16";
@@ -63,6 +34,19 @@ const Layout = () => {
     <div className="flex flex-row relative">
       <Sidebar isToggled={isToggled} setIsToggled={setIsToggled} />
 
+      {/* Mobile Menu Button - Fixed top left */}
+      {isMobile && !isToggled && (
+        <button
+          onClick={() => setIsToggled(true)}
+          className="fixed top-4 left-4 z-50 p-3 rounded-full bg-[color:var(--color-background)]/50 
+                     text-[color:var(--color-heading)] shadow-lg hover:opacity-90 
+                     transition-all duration-200 md:hidden border 
+                     border-[color:var(--color-heading)]"
+        >
+          <GoSidebarCollapse />
+        </button>
+      )}
+
       {/* Overlay for mobile when sidebar is open */}
       {isToggled && isMobile && (
         <div
@@ -72,9 +56,6 @@ const Layout = () => {
       )}
 
       <section
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
         className={`w-full p-3 md:p-10 min-h-screen bg-[color:var(--color-bg)] 
         overflow-y-auto relative transition-all duration-300 ease-in-out ${getMarginClass}`}
       >
@@ -196,7 +177,7 @@ const Layout = () => {
         </div>
 
         {/* Content */}
-        <div className="relative z-10">
+        <div className="relative z-10 pl-3">
           <Outlet />
         </div>
       </section>
