@@ -14,6 +14,7 @@ import { RxAvatar } from "react-icons/rx";
 import { SiGmail } from "react-icons/si";
 import { NavLink } from "react-router-dom";
 import { GoSidebarCollapse, GoSidebarExpand } from "react-icons/go";
+import { PiMicrosoftOutlookLogo } from "react-icons/pi";
 
 const Sidebar = ({
   isToggled,
@@ -189,8 +190,8 @@ const Sidebar = ({
           >
             <FaWhatsapp />
           </a>
-          <a href="mailto:eighthmudathir@gmail.com">
-            <SiGmail />
+          <a href="mailto:fifthmudathir@outlook.com">
+            <PiMicrosoftOutlookLogo />
           </a>
         </div>
 
