@@ -1,7 +1,12 @@
+import { SiJavascript, SiPrisma, SiTypescript } from "react-icons/si";
 import image1 from "../assets/img11.jpeg";
 import image2 from "../assets/img12.jpeg";
 import image3 from "../assets/img13.jpeg";
 import image4 from "../assets/img14.jpeg";
+import { SliderContent } from "../lib/content";
+import { FaNodeJs, FaReact } from "react-icons/fa";
+import { RiNextjsFill, RiTailwindCssFill } from "react-icons/ri";
+import { BiLogoPostgresql } from "react-icons/bi";
 
 const About = () => {
   const imageDetails = [
@@ -37,6 +42,78 @@ const About = () => {
               className="w-40 h-52 rounded-md bg-cover"
             />
           ))}
+        </div>
+      </section>
+      <section className="flex flex-col gap-5 mt-13">
+        <h2 className="text-center text-[color:var(--color-subheading)] text-2xl md:text-4xl font-bold">
+          Technologies I use...
+        </h2>
+        <div className="mt-13 overflow-hidden relative">
+          <style>{`
+                  @keyframes slide {
+                    from {
+                      transform: translateX(0);
+                    }
+                    to {
+                      transform: translateX(-50%);
+                    }
+                  }
+                  .animate-slide {
+                    animation: slide 20s linear infinite;
+                    display: flex;
+                    gap: 3.75rem;
+                  }
+                `}</style>
+
+          <div className="animate-slide" style={{ width: "max-content" }}>
+            <div className="flex gap-15">
+              {/* First set */}
+              <SliderContent />
+            </div>
+            <div className="flex gap-15">
+              {/* First set */}
+              <SliderContent />
+            </div>
+          </div>
+
+          <div className="flex flex-row gap3 justify-around items-center mt-8 ">
+            <div className="flex-col flex gap-6">
+              <span className="flex flex-row gap-2 text-xl md:text-2xl">
+                <SiTypescript className="w-5 h-5 md:w-9 md:h-9" />
+                TypeScript
+              </span>
+              <span className="flex flex-row gap-2 text-xl md:text-2xl">
+                <FaReact className="w-5 h-5 md:w-9 md:h-9" />
+                React.js
+              </span>
+              <span className="flex flex-row gap-2 text-xl md:text-2xl">
+                <RiNextjsFill className="w-5 h-5 md:w-9 md:h-9" />
+                Next.js
+              </span>
+              <span className="flex flex-row gap-2 text-xl md:text-2xl">
+                <FaNodeJs className="w-5 h-5 md:w-9 md:h-9" />
+                Node.js
+              </span>
+            </div>
+            <div className="flex flex-col gap-6">
+              <span className="flex flex-row gap-2 text-xl md:text-2xl">
+                <BiLogoPostgresql className="w-5 h-5 md:w-9 md:h-9" />
+                PostgreSQL
+              </span>
+              <span className="flex flex-row gap-2 text-xl md:text-2xl">
+                <SiPrisma className="w-5 h-5 md:w-9 md:h-9" />
+                Prisma
+              </span>
+              <span className="flex flex-row gap-2 text-xl md:text-2xl">
+                <SiJavascript className="w-5 h-5 md:w-9 md:h-9" />
+                JavaScript
+              </span>
+              <span className="flex flex-row gap-2 text-xl md:text-2xl">
+                <RiTailwindCssFill className="w-5 h-5 md:w-9 md:h-9" />
+                TailwindCSS
+              </span>
+            </div>
+          </div>
         </div>
       </section>
     </>

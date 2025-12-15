@@ -65,7 +65,8 @@ const Projects = () => {
         {webDetails.map((webDetail) => (
           <div
             className="flex flex-col gap-4 items-center p-4 rounded-md w-full lg:w-[24%] hover:scale-110
-                       bg-[color:var(--color-bg)] transition-all border border-[color:var(--color-border)]"
+                       bg-[color:var(--color-bg)] transition-all border border-[color:var(--color-border)]
+                       shadow-md"
             key={webDetail.id}
           >
             <a
